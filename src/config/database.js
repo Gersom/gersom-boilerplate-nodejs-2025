@@ -1,5 +1,5 @@
-const { connect } = require('mongoose')
-const { db } = require('./env.js')
+import { connect } from 'mongoose'
+import { db } from './env.js'
 
 const connectDatabase = async () => {
   try {
@@ -9,7 +9,7 @@ const connectDatabase = async () => {
     databaseURI = databaseURI.replace('<database>', db.name)
 
     const conn = await connect(databaseURI)
-    console.log(`MongoDB Connected: ${conn.connection.host}`)
+    console.log(`* MongoDB Connected: ${conn.connection.host} ✅`)
   } catch (error) {
     console.log('Error connecting to MongoDB')
     console.error(error)
@@ -17,4 +17,4 @@ const connectDatabase = async () => {
   }
 }
 
-module.exports = connectDatabase
+export default connectDatabase

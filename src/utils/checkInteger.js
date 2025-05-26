@@ -11,4 +11,4 @@ function checkInteger (valor, name = '') {
   throw new Error(`\n*** ERROR ***\n${name || valor} should be an integer.`)
 }
 
-module.exports = checkInteger
+export default checkInteger

@@ -1,46 +1,46 @@
-const UserRepository = require('./user.repository')
-const { responseSuccess } = require('@utils/apiSuccess')
+import userRepository from './user.repository.js'
+import { NotFoundError } from '#utils/apiErrors.js'
+import asyncHandler from '#middleware/asyncHandler.js'
+import { responseSuccess } from '#utils/apiSuccess.js'
 
-const UserController = {
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await userRepository.findAll()
+  responseSuccess(res, 200, 'Users retrieved successfully', users)
+})
 
-  async getAllUsers (_, res) {
-    const result = await UserRepository.getAllUsers()
-    res
-      .status(200)
-      .json(responseSuccess('Users retrieved successfully', result))
-  },
-
-  async getUser (req, res) {
-    const { id } = req.params
-
-    const result = await UserRepository.getUser(id)
-    res
-      .status(200)
-      .json(responseSuccess('User retrieved successfully', result))
-  },
-
-  async createUser (req, res) {
-    const result = await UserRepository.createUser(req.body)
-    res
-      .status(200)
-      .json(responseSuccess('User created successfully', result))
-  },
-
-  async updateUser (req, res) {
-    const { id } = req.params
-    await UserRepository.updateUser(id, req.body)
-    res
-      .status(200)
-      .json(responseSuccess('User updated successfully'))
-  },
-
-  async deleteUser (req, res) {
-    const { id } = req.params
-    await UserRepository.deleteUser(id)
-    res
-      .status(200)
-      .json(responseSuccess('User deleted successfully'))
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await userRepository.findById(req.params.id)
+  if (!user) {
+    throw new NotFoundError('User not found')
   }
-}
+  responseSuccess(res, 200, 'User retrieved successfully', user)
+})
 
-module.exports = UserController
+const createUser = asyncHandler(async (req, res) => {
+  const user = await userRepository.create(req.body)
+  responseSuccess(res, 201, 'User created successfully', { id: user?.id || user?._id })
+})
+
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await userRepository.update(req.params.id, req.body)
+  if (!user) {
+    throw new NotFoundError('User not found')
+  }
+  responseSuccess(res, 200, 'User updated successfully')
+})
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await userRepository.delete(req.params.id)
+  if (!user) {
+    throw new NotFoundError('User not found')
+  }
+  responseSuccess(res, 204, 'User deleted successfully')
+})
+
+export default {
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser
+}

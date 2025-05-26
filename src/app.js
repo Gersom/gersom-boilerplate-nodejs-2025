@@ -1,13 +1,12 @@
-require('./config/aliases')
-const express = require('express')
+import express from 'express'
 
 // Import configuration modules
-const { initEnv } = require('./config/env')
-// const { connectDatabase } = require('./config/database')
-const setupRoutes = require('./config/setupRoutes')
-const startServer = require('./config/listen')
-const middlewares = require('./config/middlewares')
-const { printAuthor } = require('./utils/author')
+import { initEnv } from '#config/env.js'
+// import connectDatabase from '#config/database.js'
+import setupRoutes from '#config/setupRoutes.js'
+import startServer from '#config/listen.js'
+import middlewares from '#config/middlewares.js'
+import { printAuthor } from '#utils/author.js'
 printAuthor()
 
 const setupServer = async () => {

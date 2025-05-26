@@ -46,4 +46,4 @@ const asyncHandler = fn => (req, res, next) => {
 //   }
 // }
 
-module.exports = { asyncHandler }
+export default asyncHandler

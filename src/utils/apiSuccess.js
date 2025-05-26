@@ -1,11 +1,10 @@
-const { author } = require('@utils/author')
+import { author } from '#utils/author.js'
 
-const responseSuccess = (message = 'success', args = null) => {
-  const { data, ...rest } = args
-  const response = {
+export const generateResponse = (message = 'success', data = null, args = null) => {
+  let response = {
     message,
     success: true,
-    ...rest,
+    ...args,
     author
   }
 
@@ -18,4 +17,7 @@ const responseSuccess = (message = 'success', args = null) => {
   return response
 }
 
-module.exports = { responseSuccess }
+export const responseSuccess = (res, status, message, data, args) => {
+  const response = generateResponse(message, data, args)
+  res.status(status).json(response)
+}

@@ -1,4 +1,4 @@
-const addStaticMethods = (scheme) => {
+export const addMethods = (scheme) => {
   // Find Data
   scheme.static('findAllData', function () {
     return this.find({})
@@ -35,9 +35,10 @@ const addStaticMethods = (scheme) => {
   })
 
   // Create Data
+  scheme.static('createData', function (data = {}) {
+    return this.create(data)
+  })
   scheme.static('createManyData', function (data = []) {
     return this.insertMany(data)
   })
 }
-
-module.exports = addStaticMethods

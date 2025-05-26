@@ -1,36 +1,36 @@
-const customErrors = require('@utils/apiErrors')
-const { author } = require('@utils/author')
+import { author } from '#utils/author.js'
 
+// const errorHandler = (err, req, res, next) => {
 const errorHandler = (err, req, res, next) => {
-  const isCustomError = Object.values(customErrors).some(
-    (ErrorType) => err instanceof ErrorType
-  )
-
   const errorResponse = {
     success: false,
-    status: isCustomError ? err.status : 500,
+    status: err.status || 500,
     error: {
-      code: isCustomError ? err.code : 'SRV_001',
-      description: isCustomError ? err.description : 'Server error'
+      code: err.code || 'SRV_001',
+      message: err.message || 'Server error'
     },
     author
   }
 
   console.error('\nERROR:')
   console.log('* Name:', err.name)
-  console.log('* Description:', err.description)
   console.log('* Code:', err.code)
+  console.error('* Message:', err.message)
 
   if (process.env.NODE_ENV === 'development') {
-    const replaceStack = err.stack?.replace(`DataError: ${err.message}\n `, '')
-    errorResponse.error.message = err.message
+    errorResponse.error.name = err.name
+
+    if (err.context) errorResponse.error.context = err.context
+
+    const replaceStack = err.stack?.replace(`${err.name}: ${err.message}\n `, '')
     errorResponse.error.stack = replaceStack
 
-    console.error('* Message:', err.message)
-    console.log('* Stack:\n', replaceStack)
+    if (err.issues) console.log('* Issues:', err.issues)
+    if (err.context) console.log('* Context:', err.context)
+    if (err.stack) console.log('* Stack:\n', err.stack)
   }
 
   res.status(errorResponse.status).json(errorResponse)
 }
 
-module.exports = errorHandler
+export default errorHandler

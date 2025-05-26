@@ -1,53 +1,103 @@
-const ERROR_CODES = require('./errorCodes')
-class BaseError extends Error {
-  constructor (category, errorKey, customMessage) {
-    const errorDef = ERROR_CODES[category][errorKey]
-    if (!errorDef) { throw new Error(`Error definition not found for ${category}.${errorKey}`) }
+import ERROR_CODES from './errorCodes.js';
 
-    super(customMessage || errorDef.message)
-    this.name = this.constructor.name
-    this.code = errorDef.code
-    this.description = errorDef.description
-    this.status = errorDef.status
-  }
-}
+// Base Error Class
+export const BaseError = class extends Error {
+  constructor(errorKey, customMessage, context) {
+    const customError = ERROR_CODES[errorKey];
+    if (!customError) { 
+      throw new Error(`Error definition not found for ${errorKey}`);
+    }
 
-class AuthorizationError extends BaseError {
-  constructor (errorKey, customMessage) {
-    super('AUTH', errorKey, customMessage)
-  }
-}
-class ExpirationError extends BaseError {
-  constructor (errorKey, customMessage) {
-    super('EXPIRATION', errorKey, customMessage)
-  }
-}
-class EmailError extends BaseError {
-  constructor (errorKey, customMessage) {
-    super('EMAIL', errorKey, customMessage)
-  }
-}
-class DataError extends BaseError {
-  constructor (errorKey, customMessage) {
-    super('DATA', errorKey, customMessage)
-  }
-}
-class ValidationError extends BaseError {
-  constructor (errorKey, customMessage) {
-    super('VALIDATION', errorKey, customMessage)
-  }
-}
-class ServerError extends BaseError {
-  constructor (errorKey, customMessage) {
-    super('SERVER', errorKey, customMessage)
+    // Use customError.description if customMessage is null, undefined, or empty string
+    const message = (customMessage && customMessage.trim() !== '') ? customMessage : customError.description;
+    
+    super(message);
+    this.name = this.constructor.name;
+    this.code = customError.code;
+    this.status = customError.status;
+    this.context = context || null;
   }
 }
 
-module.exports = {
-  AuthorizationError,
-  ExpirationError,
-  EmailError,
-  DataError,
-  ValidationError,
-  ServerError
+// Authentication & Authorization Error Classes
+export const UnauthorizedError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('UNAUTHORIZED', customMessage, context);
+  }
+}
+
+export const ForbiddenError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('FORBIDDEN', customMessage, context);
+  }
+}
+
+export const InvalidTokenError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('INVALID_TOKEN', customMessage, context);
+  }
+}
+
+export const TokenExpiredError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('TOKEN_EXPIRED', customMessage, context);
+  }
+}
+
+export const RefreshTokenExpiredError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('REFRESH_TOKEN_EXPIRED', customMessage, context);
+  }
+}
+
+export const RefreshTokenInvalidError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('REFRESH_TOKEN_INVALID', customMessage, context);
+  }
+}
+
+// Data & Resource Error Classes
+export const NotFoundError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('NOT_FOUND', customMessage, context);
+  }
+}
+
+export const DataConflictError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('DATA_CONFLICT', customMessage, context);
+  }
+}
+
+export const ResourceExpiredError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('RESOURCE_EXPIRED', customMessage, context);
+  }
+}
+
+// Validation Error Classes
+export const InvalidInputError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('INVALID_INPUT', customMessage, context);
+  }
+}
+
+export const CodeExpiredError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('CODE_EXPIRED', customMessage, context);
+  }
+}
+
+// Email Error Classes
+export const EmailSendError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('EMAIL_SEND_ERROR', customMessage, context);
+  }
+}
+
+// Server Error Classes
+export const InternalError = class extends BaseError {
+  constructor(customMessage, context) {
+    super('INTERNAL_ERROR', customMessage, context);
+  }
 }

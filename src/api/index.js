@@ -1,5 +1,5 @@
-const { Router } = require('express')
-const routeAdmin = require('./admin')
+import { Router } from 'express'
+import routeAdmin from './admin/index.js'
 // const routeAuth = require('./auth')
 // const routeCommon = require('./common')
 
@@ -9,4 +9,4 @@ router.use('/admin', routeAdmin)
 // router.use('/common', routeCommon)
 // router.use('/auth', routeAuth)
 
-module.exports = router
+export default router

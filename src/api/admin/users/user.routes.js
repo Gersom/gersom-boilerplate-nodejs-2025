@@ -1,24 +1,22 @@
-const { Router } = require('express')
-const { asyncHandler } = require('@middleware/asyncHandler')
-const { validateRegister } = require('./user.validation')
-const UserController = require('./user.controller')
+import express from 'express'
+import userController from './user.controller.js'
+import { validateCreateUser, validateUpdateUser } from './user.validation.js'
 
-const router = Router()
+const router = express.Router()
 
-router.get('/',
-  asyncHandler(UserController.getAllUsers))
+// Get all users
+router.get('/', userController.getAllUsers)
 
-router.get('/:id',
-  asyncHandler(UserController.getUser))
+// Get a single user by ID
+router.get('/:id', userController.getUserById)
 
-router.post('/',
-  validateRegister,
-  asyncHandler(UserController.createUser))
+// Create a new user
+router.post('/', validateCreateUser, userController.createUser)
 
-router.patch('/:id',
-  asyncHandler(UserController.updateUser))
+// Update a user
+router.put('/:id', validateUpdateUser, userController.updateUser)
 
-router.delete('/:id',
-  asyncHandler(UserController.deleteUser))
+// Delete a user
+router.delete('/:id', userController.deleteUser)
 
-module.exports = router
+export default router

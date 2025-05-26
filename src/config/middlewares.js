@@ -1,9 +1,10 @@
-const { json, urlencoded } = require('express')
-// const cookieParser = require('cookie-parser')
-const cors = require('cors')
-// const helmet = require('helmet');
+import { json, urlencoded } from 'express'
+import cors from 'cors'
+import morgan from 'morgan'
+// import cookieParser from 'cookie-parser'
+// import helmet from 'helmet'
 
-const { serv } = require('@config/env.js')
+import { serv } from '#config/env.js'
 
 const middlewares = (app) => {
   const generateOrigin = () => {
@@ -30,15 +31,15 @@ const middlewares = (app) => {
   // app.use(helmet());
 
   if (serv.nodeEnv === 'development') {
-    const morgan = require('morgan')
     app.use(morgan('dev'))
   }
 
   // // Cookie parser
   // app.use(cookieParser())
 
+  app.disable('x-powered-by')
   app.use(json())
   app.use(urlencoded({ extended: true }))
 }
 
-module.exports = middlewares
+export default middlewares
