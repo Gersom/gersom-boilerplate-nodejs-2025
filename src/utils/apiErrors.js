@@ -14,85 +14,34 @@ export const BaseError = class extends Error {
   }
 }
 
+// Factory function to create error classes
+const createErrorClass = (errorType) => {
+  return class extends BaseError {
+    constructor(customMessage, context) {
+      super(errorType, customMessage, context);
+    }
+  };
+};
+
 // Authentication & Authorization Error Classes
-export const UnauthorizedError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.UNAUTHORIZED, customMessage, context);
-  }
-}
-
-export const ForbiddenError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.FORBIDDEN, customMessage, context);
-  }
-}
-
-export const InvalidTokenError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.INVALID_TOKEN, customMessage, context);
-  }
-}
-
-export const TokenExpiredError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.TOKEN_EXPIRED, customMessage, context);
-  }
-}
-
-export const RefreshTokenExpiredError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.REFRESH_TOKEN_EXPIRED, customMessage, context);
-  }
-}
-
-export const RefreshTokenInvalidError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.REFRESH_TOKEN_INVALID, customMessage, context);
-  }
-}
+export const UnauthorizedError = createErrorClass(customError.UNAUTHORIZED);
+export const ForbiddenError = createErrorClass(customError.FORBIDDEN);
+export const InvalidTokenError = createErrorClass(customError.INVALID_TOKEN);
+export const TokenExpiredError = createErrorClass(customError.TOKEN_EXPIRED);
+export const RefreshTokenExpiredError = createErrorClass(customError.REFRESH_TOKEN_EXPIRED);
+export const RefreshTokenInvalidError = createErrorClass(customError.REFRESH_TOKEN_INVALID);
 
 // Data & Resource Error Classes
-export const NotFoundError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.NOT_FOUND, customMessage, context);
-  }
-}
-
-export const DataConflictError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.DATA_CONFLICT, customMessage, context);
-  }
-}
-
-export const ResourceExpiredError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.RESOURCE_EXPIRED, customMessage, context);
-  }
-}
+export const NotFoundError = createErrorClass(customError.NOT_FOUND);
+export const DataConflictError = createErrorClass(customError.DATA_CONFLICT);
+export const ResourceExpiredError = createErrorClass(customError.RESOURCE_EXPIRED);
 
 // Validation Error Classes
-export const InvalidInputError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.INVALID_INPUT, customMessage, context);
-  }
-}
-
-export const CodeExpiredError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.CODE_EXPIRED, customMessage, context);
-  }
-}
+export const InvalidInputError = createErrorClass(customError.INVALID_INPUT);
+export const CodeExpiredError = createErrorClass(customError.CODE_EXPIRED);
 
 // Email Error Classes
-export const EmailSendError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.EMAIL_SEND_ERROR, customMessage, context);
-  }
-}
+export const EmailSendError = createErrorClass(customError.EMAIL_SEND_ERROR);
 
 // Server Error Classes
-export const InternalError = class extends BaseError {
-  constructor(customMessage, context) {
-    super(customError.INTERNAL_ERROR, customMessage, context);
-  }
-}
+export const InternalError = createErrorClass(customError.INTERNAL_ERROR);
