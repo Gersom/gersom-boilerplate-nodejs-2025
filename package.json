@@ -5,10 +5,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node --env-file .env server.js",
+    "start": "npm run start:node",
     "start:bun": "bun server.js",
     "start:node": "node --env-file .env server.js",
-    "dev": "node --trace-warnings --watch --env-file .env server.js",
+    "dev": "npm run start:node",
     "dev:bun": "bun --watch server.js",
     "dev:node": "node --trace-warnings --watch --env-file .env server.js",
     "lint": "standard",
