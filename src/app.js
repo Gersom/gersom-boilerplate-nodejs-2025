@@ -1,32 +1,20 @@
 import express from 'express'
 
 // Import configuration modules
-import { initEnv } from '#config/env.js'
-// import connectDatabase from '#config/database.js'
-import setupRoutes from '#config/setupRoutes.js'
-import startServer from '#config/listen.js'
-import middlewares from '#config/middlewares.js'
-import { printAuthor } from '#utils/author.js'
-printAuthor()
+import { setupRoutes } from '#config/setupRoutes.js'
+import { startServer } from '#config/listen.js'
+import { setupMiddlewares } from '#config/middlewares.js'
 
-const setupServer = async () => {
-  // Initialize environment
-  await initEnv()
-
-  // Connect to database
-  // await connectDatabase()
-
+export const createApp = async ({ models }) => {
   // Create Express application
   const app = express()
 
   // Setup middlewares
-  middlewares(app)
+  setupMiddlewares({ app })
 
   // Setup routes
-  setupRoutes(app)
+  setupRoutes({ app, models })
 
   // Start server
-  startServer(app)
+  startServer({ app })
 }
-
-setupServer()

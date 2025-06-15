@@ -1,11 +1,15 @@
 import { Router } from 'express'
 
 // Import all route files
-import usersRoutes from './users/user.routes.js'
+import { createUserRouter } from './users/user.routes.js'
+// import { createTagRouter } from './tags/tag.routes.js'
 
-const router = Router()
+export const createAdminRouter = ({ models }) => {
+  const router = Router()
 
-// Setup routes for each module
-router.use('/users', usersRoutes)
+  // Setup routes for each module
+  router.use('/users', createUserRouter({ models }))
+  // router.use('/tags', createTagRouter({ models }))
 
-export default router
+  return router
+}

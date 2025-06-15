@@ -1,13 +1,11 @@
-import { serv } from '#config/env.js'
+import { env } from '#config/env.js'
 
-const startServer = (app) => {
+export const startServer = ({ app }) => {
   const message = 'Running on'
-  const fullMessage = `* ${message}: ${serv.address} 🌐`
+  const fullMessage = `* ${message}: ${env.address} 🌐`
 
-  app.listen(serv.port, () => {
+  app.listen(env.PORT, () => {
     console.log('* Server started successfully ✅')
     console.log(fullMessage)
   })
 }
-
-export default startServer

@@ -23,7 +23,7 @@ const updateUserSchema = z.object({
   isEmailVerified: z.boolean().optional(),
   isWhatsappVerified: z.boolean().optional()
 }).refine(data => Object.keys(data).length > 0, {
-  message: "At least one field must be provided"
+  message: 'At least one field must be provided'
 })
 
 // Transform functions for lowercase conversion

@@ -6,7 +6,7 @@
       "#src/*": ["./src/*"],
       "#api/*": ["./src/api/*"],
       "#config/*": ["./src/config/*"],
-      "#data/*": ["./src/data/*"],
+      "#database/*": ["./src/database/*"],
       "#middleware/*": ["./src/middleware/*"],
       "#models/*": ["./src/models/*"],
       "#storage/*": ["./src/storage/*"],

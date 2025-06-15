@@ -1,5 +1,4 @@
-
-const ERROR_CODES = {
+const customError = {
   // Authentication & Authorization Errors
   UNAUTHORIZED: {
     code: 'AUTH_001',
@@ -76,4 +75,4 @@ const ERROR_CODES = {
   }
 }
 
-export default ERROR_CODES
+export default customError

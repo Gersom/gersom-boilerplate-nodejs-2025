@@ -1,22 +1,17 @@
-import express from 'express'
-import userController from './user.controller.js'
+import { Router } from 'express'
+import UserController from './user.controller.js'
 import { validateCreateUser, validateUpdateUser } from './user.validation.js'
 
-const router = express.Router()
+export const createUserRouter = ({ models }) => {
+  const router = Router()
 
-// Get all users
-router.get('/', userController.getAllUsers)
+  const userController = new UserController({ models })
 
-// Get a single user by ID
-router.get('/:id', userController.getUserById)
+  router.get('/', userController.getAllUsers)
+  router.get('/:id', userController.getUserById)
+  router.post('/', validateCreateUser, userController.createUser)
+  router.put('/:id', validateUpdateUser, userController.updateUser)
+  router.delete('/:id', userController.deleteUser)
 
-// Create a new user
-router.post('/', validateCreateUser, userController.createUser)
-
-// Update a user
-router.put('/:id', validateUpdateUser, userController.updateUser)
-
-// Delete a user
-router.delete('/:id', userController.deleteUser)
-
-export default router
+  return router
+}

@@ -1,35 +1,68 @@
-// const checkInteger = require('#utils/checkInteger')
+const envs = process.env
 
-const ENV_VARS = {
-  // serv
+export const ENV_VARS = {
+  // Server
   NODE_ENV: 'NODE_ENV',
   HOST: 'HOST',
   PORT: 'PORT',
   ALLOWED_PROD_ORIGINS: 'ALLOWED_PROD_ORIGINS',
   ALLOWED_DEV_ORIGINS: 'ALLOWED_DEV_ORIGINS',
 
-  // db
+  // Database
+  DB_TYPE: 'DB_TYPE',
   DB_URI: 'DB_URI',
   DB_NAME: 'DB_NAME',
   DB_USER: 'DB_USER',
   DB_PASSWORD: 'DB_PASSWORD',
 
-  // jwt
+  // // JWT
   // JWT_ACCESS_EXPIRES_IN: 'JWT_ACCESS_EXPIRES_IN',
   // JWT_ACCESS_SECRET: 'JWT_ACCESS_SECRET',
   // JWT_REFRESH_EXPIRES_IN: 'JWT_REFRESH_EXPIRES_IN',
   // JWT_REFRESH_SECRET: 'JWT_REFRESH_SECRET',
 
-  // auth
+  // // Auth
   // SALT_ROUNDS: 'SALT_ROUNDS',
 
-  // mailer
+  // // Mailer
   // MAILER_EMAIL: 'MAILER_EMAIL',
   // MAILER_PASSWORD: 'MAILER_PASSWORD'
 }
 
+export const env = {
+  // Server
+  NODE_ENV: envs[ENV_VARS.NODE_ENV],
+  HOST: envs[ENV_VARS.HOST],
+  PORT: envs[ENV_VARS.PORT],
+  ALLOWED_PROD_ORIGINS: envs[ENV_VARS.ALLOWED_PROD_ORIGINS],
+  ALLOWED_DEV_ORIGINS: envs[ENV_VARS.ALLOWED_DEV_ORIGINS],
+  get isProduction () { return this.NODE_ENV === 'production' },
+  get isDevelopment () { return this.NODE_ENV === 'development' },
+  get address () { return this.PORT ? `${this.HOST}:${this.PORT}` : this.HOST },
+
+  // Database
+  DB_TYPE: envs[ENV_VARS.DB_TYPE],
+  DB_URI: envs[ENV_VARS.DB_URI],
+  DB_NAME: envs[ENV_VARS.DB_NAME],
+  DB_USER: envs[ENV_VARS.DB_USER],
+  DB_PASSWORD: envs[ENV_VARS.DB_PASSWORD],
+
+  // // JWT
+  // JWT_ACCESS_EXPIRES_IN: envs[ENV_VARS.JWT_ACCESS_EXPIRES_IN],
+  // JWT_ACCESS_SECRET: envs[ENV_VARS.JWT_ACCESS_SECRET],
+  // JWT_REFRESH_EXPIRES_IN: envs[ENV_VARS.JWT_REFRESH_EXPIRES_IN],
+  // JWT_REFRESH_SECRET: envs[ENV_VARS.JWT_REFRESH_SECRET],
+
+  // // Auth
+  // SALT_ROUNDS: envs[ENV_VARS.SALT_ROUNDS],
+
+  // // Mailer
+  // MAILER_EMAIL: envs[ENV_VARS.MAILER_EMAIL],
+  // MAILER_PASSWORD: envs[ENV_VARS.MAILER_PASSWORD]
+}
+
 export const initEnv = () => {
-  const missingVars = Object.values(ENV_VARS).filter(varName => !process.env[varName])
+  const missingVars = Object.values(ENV_VARS).filter(varName => !envs[varName])
 
   if (missingVars.length > 0) {
     console.error('ERROR:')
@@ -43,47 +76,7 @@ export const initEnv = () => {
   console.log('STATUS:')
   console.log('* Environment variables loaded ✅')
   let msgServMode = '* Server mode: '
-  if (serv.isDevelopment) msgServMode += 'development 💻'
-  if (serv.isProduction) msgServMode += 'production 🏢'
+  if (env.isDevelopment) msgServMode += 'development 💻'
+  if (env.isProduction) msgServMode += 'production 🏢'
   console.log(msgServMode)
 }
-
-const getEnvVar = (key) => process.env[ENV_VARS[key]]
-
-export const serv = {
-  nodeEnv: getEnvVar('NODE_ENV'),
-  get isProduction () { return this.nodeEnv === 'production' },
-  get isDevelopment () { return this.nodeEnv === 'development' },
-  host: getEnvVar('HOST'),
-  port: getEnvVar('PORT'),
-  get address () {
-    return this.port ? `${this.host}:${this.port}` : this.host
-  },
-  allowedDevOrigins: getEnvVar('ALLOWED_DEV_ORIGINS'),
-  allowedProdOrigins: getEnvVar('ALLOWED_PROD_ORIGINS')
-}
-
-export const db = {
-  uri: getEnvVar('DB_URI'),
-  name: getEnvVar('DB_NAME'),
-  user: getEnvVar('DB_USER'),
-  password: getEnvVar('DB_PASSWORD')
-}
-
-// export const jwt = {
-//   secret: getEnvVar('JWT_ACCESS_SECRET'),
-//   expiration: getEnvVar('JWT_ACCESS_EXPIRES_IN'),
-//   refreshExpiration: getEnvVar('JWT_REFRESH_EXPIRES_IN'),
-//   refreshSecret: getEnvVar('JWT_REFRESH_SECRET')
-// }
-
-// export const auth = {
-//   get saltRounds () {
-//     return checkInteger(getEnvVar('SALT_ROUNDS'))
-//   }
-// }
-
-// export const mailer = {
-//   email: getEnvVar('MAILER_EMAIL'),
-//   password: getEnvVar('MAILER_PASSWORD')
-// }

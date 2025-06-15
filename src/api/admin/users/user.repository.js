@@ -1,29 +1,25 @@
-import { User } from '#models/mongoose/index.js'
+export default class UserRepository {
+  constructor ({ userModel }) {
+    this.userModel = userModel
+  }
 
-const findAll = async () => {
-  return await User.findAllData()
-}
+  findAll = async () => {
+    return await this.userModel.findAllData()
+  }
 
-const findById = async (id) => {
-  return await User.findDataById(id)
-}
+  findById = async (id) => {
+    return await this.userModel.findDataById(id)
+  }
 
-const create = async (data) => {
-  return await User.createData(data)
-}
+  create = async (data) => {
+    return await this.userModel.createData(data)
+  }
 
-const update = async (id, data) => {
-  return await User.updateDataById(id, data)
-}
+  update = async (id, data) => {
+    return await this.userModel.updateDataById(id, data)
+  }
 
-const deleteById = async (id) => {
-  return await User.removeDataById(id)
-}
-
-export default {
-  findAll,
-  findById,
-  create,
-  update,
-  delete: deleteById
+  deleteById = async (id) => {
+    return await this.userModel.removeDataById(id)
+  }
 }

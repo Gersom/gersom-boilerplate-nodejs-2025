@@ -1,20 +1,25 @@
-import { NotFoundError } from '#utils/apiErrors.js'
-import errorHandler from '#middleware/errorHandler.js'
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
 import express from 'express'
-import routerApi from '#api/index.js'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+import { createApiRouter } from '#api/index.js'
+import errorHandler from '#middleware/errorHandler.js'
+import { NotFoundError } from '#utils/apiErrors.js'
 
 // Get __dirname equivalent in ESM
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const setupRoutes = (app) => {
+export const setupRoutes = ({ app, models }) => {
   // Define API routes
-  app.use('/api', routerApi)
+  app.use('/api', createApiRouter({ models }))
 
   // Static file serving
   app.use('/storage', express.static(join(__dirname, '..', 'storage')))
+
+  // Serve favicon.ico
+  app.get('/favicon.ico', (req, res) => {
+    res.sendFile(join(__dirname, '..', 'storage', 'favicon.ico'))
+  })
 
   // Chrome DevTools
   app.use('/.well-known/appspecific/com.chrome.devtools.json', (req, res) => {
@@ -32,5 +37,3 @@ const setupRoutes = (app) => {
 
   app.use(errorHandler)
 }
-
-export default setupRoutes

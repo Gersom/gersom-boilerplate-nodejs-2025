@@ -1,12 +1,14 @@
 import { Router } from 'express'
-import routeAdmin from './admin/index.js'
+import { createAdminRouter } from './admin/index.js'
 // const routeAuth = require('./auth')
 // const routeCommon = require('./common')
 
-const router = Router()
+export const createApiRouter = ({ models }) => {
+  const router = Router()
 
-router.use('/admin', routeAdmin)
-// router.use('/common', routeCommon)
-// router.use('/auth', routeAuth)
+  router.use('/admin', createAdminRouter({ models }))
+  // router.use('/common', routeCommon)
+  // router.use('/auth', routeAuth)
 
-export default router
+  return router
+}

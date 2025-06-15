@@ -23,6 +23,24 @@ const userSchema = new Schema({
     required: true,
     enum: ['admin', 'user'],
     default: 'user'
+  },
+  whatsapp: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  imageUrl: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
+  isWhatsappVerified: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true,

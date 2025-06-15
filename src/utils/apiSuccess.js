@@ -2,9 +2,9 @@ import { author } from '#utils/author.js'
 
 export const generateResponse = (message = 'success', data = null, args = null) => {
   let response = {
-    message,
-    success: true,
     ...args,
+    success: true,
+    message,
     author
   }
 

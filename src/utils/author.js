@@ -1,6 +1,6 @@
 export const author = {
   name: 'Gersom Alaja',
-  email: 'gersom.alaja@gmail.com',
+  email: 'gersomalaja@gmail.com',
   github: 'https://github.com/Gersom',
   linkedin: 'https://www.linkedin.com/in/gersomalaja'
 }
