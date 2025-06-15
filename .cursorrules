@@ -1,0 +1,24 @@
+# Commit Convention
+Always start commit messages with appropriate emojis and write in English:
+- ✨ feat: new features
+- 🐛 fix: bug fixes
+- 📚 docs: documentation updates
+- 🎨 style: formatting, styling changes
+- ♻️ refactor: code refactoring
+- ⚡ perf: performance improvements
+- ✅ test: adding or updating tests
+- 🔧 chore: maintenance tasks
+- 🚀 deploy: deployment related changes
+- 🔥 remove: removing code/files
+- 🔒 security: security fixes
+- 🌐 i18n: internationalization
+- 🖼️ ui: UI/UX specific improvements
+- 🌟 enhance: general improvement
+
+Format: "emoji type: description in present tense"
+Example: "✨ feat: add user authentication system"
+
+# Code Style
+- Comments and documentation in Spanish
+- Code, variables, and commit messages in English
+- Follow ES6+ conventions
