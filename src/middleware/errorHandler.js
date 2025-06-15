@@ -1,7 +1,6 @@
 import { author } from '#utils/author.js'
 
-// Arguments: err, req, res, next
-const errorHandler = (err, _, res, _) => {
+const errorHandler = (err, _req, res, _next) => {
   const errorResponse = {
     success: false,
     status: err.status || 500,

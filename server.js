@@ -1,4 +1,4 @@
-import { db, initEnv } from '#config/env.js'
+import { env, initEnv } from '#config/env.js'
 import { createApp } from '#src/app.js'
 import { printAuthor } from '#utils/author.js'
 
@@ -17,13 +17,13 @@ const createServer = async () => {
   // Initialize environment
   initEnv()
 
-  if (db.type === 'mongodb') {
+  if (env.DB_TYPE === 'mongodb') {
     await connectMongoDB()
     await createApp({ models: mongooseModel })
-  } else if (db.type === 'mysql') {
+  } else if (env.DB_TYPE === 'mysql') {
     await connectMySQL()
     await createApp({ models: sequelizeModel })
-  } else if (db.type === 'postgresql') {
+  } else if (env.DB_TYPE === 'postgresql') {
     await connectPostgreSQL()
     await createApp({ models: typeormModel })
   }
