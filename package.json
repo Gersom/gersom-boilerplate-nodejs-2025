@@ -5,12 +5,14 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "bun server.js",
+    "start": "node --env-file .env server.js",
+    "start:bun": "bun server.js",
     "start:node": "node --env-file .env server.js",
-    "dev": "bun --watch server.js",
+    "dev": "node --trace-warnings --watch --env-file .env server.js",
+    "dev:bun": "bun --watch server.js",
     "dev:node": "node --trace-warnings --watch --env-file .env server.js",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
     "test": "jest"
   },
   "author": "",
