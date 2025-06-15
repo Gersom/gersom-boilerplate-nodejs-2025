@@ -1,78 +1,32 @@
+const createError = (status, code, description) => ({
+  status,
+  code,
+  description
+});
+
 const customError = {
   // Authentication & Authorization Errors
-  UNAUTHORIZED: {
-    code: 'AUTH_001',
-    description: 'No permission to access this resource',
-    status: 401
-  },
-  FORBIDDEN: {
-    code: 'AUTH_002', 
-    description: 'Action not allowed',
-    status: 403
-  },
-  INVALID_TOKEN: {
-    code: 'AUTH_003',
-    description: 'Invalid token provided',
-    status: 401
-  },
-  TOKEN_EXPIRED: {
-    code: 'AUTH_004',
-    description: 'Token has expired',
-    status: 401
-  },
-  REFRESH_TOKEN_EXPIRED: {
-    code: 'AUTH_005',
-    description: 'Refresh token has expired',
-    status: 401
-  },
-  REFRESH_TOKEN_INVALID: {
-    code: 'AUTH_006',
-    description: 'Invalid refresh token provided',
-    status: 401
-  },
+  UNAUTHORIZED: createError(401, 'AUTH_001', 'No permission to access this resource'),
+  FORBIDDEN: createError(403, 'AUTH_002', 'Action not allowed'),
+  INVALID_TOKEN: createError(401, 'AUTH_003', 'Invalid token provided'),
+  TOKEN_EXPIRED: createError(401, 'AUTH_004', 'Token has expired'),
+  REFRESH_TOKEN_EXPIRED: createError(401, 'AUTH_005', 'Refresh token has expired'),
+  REFRESH_TOKEN_INVALID: createError(401, 'AUTH_006', 'Invalid refresh token provided'),
 
   // Data & Resource Errors
-  NOT_FOUND: {
-    code: 'DATA_001',
-    description: 'Requested resource not found',
-    status: 404
-  },
-  DATA_CONFLICT: {
-    code: 'DATA_002',
-    description: 'Data conflict detected',
-    status: 409
-  },
-  RESOURCE_EXPIRED: {
-    code: 'DATA_003',
-    description: 'Resource has expired and is no longer available',
-    status: 410
-  },
+  NOT_FOUND: createError(404, 'DATA_001', 'Requested resource not found'),
+  DATA_CONFLICT: createError(409, 'DATA_002', 'Data conflict detected'),
+  RESOURCE_EXPIRED: createError(410, 'DATA_003', 'Resource has expired and is no longer available'),
 
   // Validation Errors
-  INVALID_INPUT: {
-    code: 'VALID_001',
-    description: 'Invalid or incomplete input data',
-    status: 400
-  },
-  CODE_EXPIRED: {
-    code: 'VALID_002',
-    description: 'Verification code has expired',
-    status: 400
-  },
+  INVALID_INPUT: createError(400, 'VALID_001', 'Invalid or incomplete input data'),
+  CODE_EXPIRED: createError(400, 'VALID_002', 'Verification code has expired'),
 
   // Email Errors
-  EMAIL_SEND_ERROR: {
-    code: 'EMAIL_001',
-    description: 'Failed to send email',
-    status: 500
-  },
+  EMAIL_SEND_ERROR: createError(500, 'EMAIL_001', 'Failed to send email'),
 
   // Server Errors
-  INTERNAL_ERROR: {
-    code: 'SERVER_001',
-    description: 'Internal server error',
-    status: 500
-  }
-}
+  INTERNAL_ERROR: createError(500, 'SERVER_001', 'Internal server error')
+};
 
-export default customError
+export default customError;
