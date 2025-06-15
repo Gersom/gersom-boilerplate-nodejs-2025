@@ -1,4 +1,4 @@
-# GerCash Backend Boilerplate 🚀
+# Ger Node Api 🚀
 
 [English](#english) | [Español](#español)
 
