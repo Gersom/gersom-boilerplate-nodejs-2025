@@ -1,4 +1,5 @@
 import { z } from 'zod/v4'
+import { Request, Response, NextFunction } from 'express'
 import { InvalidInputError } from '#utils/apiErrors.js'
 
 // Define schemas
@@ -26,16 +27,24 @@ const updateUserSchema = z.object({
   message: 'At least one field must be provided'
 })
 
+// Type definitions from schemas
+export type CreateUserData = z.infer<typeof createUserSchema>
+export type UpdateUserData = z.infer<typeof updateUserSchema>
+
 // Transform functions for lowercase conversion
-const transformUserData = (data) => {
+const transformUserData = (data: CreateUserData | UpdateUserData): CreateUserData | UpdateUserData => {
   const transformed = { ...data }
-  if (transformed.name) transformed.name = transformed.name.toLowerCase()
-  if (transformed.email) transformed.email = transformed.email.toLowerCase()
+  if ('name' in transformed && transformed.name) {
+    transformed.name = transformed.name.toLowerCase()
+  }
+  if ('email' in transformed && transformed.email) {
+    transformed.email = transformed.email.toLowerCase()
+  }
   return transformed
 }
 
 // Validation middleware
-export const validateCreateUser = (req, _, next) => {
+export const validateCreateUser = (req: Request, _: Response, next: NextFunction): void => {
   try {
     const validated = createUserSchema.parse(req.body)
     req.body = transformUserData(validated)
@@ -48,7 +57,7 @@ export const validateCreateUser = (req, _, next) => {
   }
 }
 
-export const validateUpdateUser = (req, _, next) => {
+export const validateUpdateUser = (req: Request, _: Response, next: NextFunction): void => {
   try {
     const validated = updateUserSchema.parse(req.body)
     req.body = transformUserData(validated)

@@ -1,10 +1,41 @@
-const createError = (status, code, description) => ({
+export type ErrorDefinition = {
+  status: number
+  code: string
+  description: string
+}
+
+const createError = (status: number, code: string, description: string): ErrorDefinition => ({
   status,
   code,
   description
-});
+})
 
-const customError = {
+export type CustomErrorCatalog = {
+  // Authentication & Authorization Errors
+  UNAUTHORIZED: ErrorDefinition
+  FORBIDDEN: ErrorDefinition
+  INVALID_TOKEN: ErrorDefinition
+  TOKEN_EXPIRED: ErrorDefinition
+  REFRESH_TOKEN_EXPIRED: ErrorDefinition
+  REFRESH_TOKEN_INVALID: ErrorDefinition
+
+  // Data & Resource Errors
+  NOT_FOUND: ErrorDefinition
+  DATA_CONFLICT: ErrorDefinition
+  RESOURCE_EXPIRED: ErrorDefinition
+
+  // Validation Errors
+  INVALID_INPUT: ErrorDefinition
+  CODE_EXPIRED: ErrorDefinition
+
+  // Email Errors
+  EMAIL_SEND_ERROR: ErrorDefinition
+
+  // Server Errors
+  INTERNAL_ERROR: ErrorDefinition
+}
+
+const customError: CustomErrorCatalog = {
   // Authentication & Authorization Errors
   UNAUTHORIZED: createError(401, 'AUTH_001', 'No permission to access this resource'),
   FORBIDDEN: createError(403, 'AUTH_002', 'Action not allowed'),
@@ -27,6 +58,6 @@ const customError = {
 
   // Server Errors
   INTERNAL_ERROR: createError(500, 'SERVER_001', 'Internal server error')
-};
+}
 
-export default customError;
+export default customError

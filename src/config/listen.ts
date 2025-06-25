@@ -1,6 +1,11 @@
-import { env } from '#config/env.js'
+import { Express } from 'express'
+import { env } from '#root/src/config/env/index.js'
 
-export const startServer = ({ app }) => {
+interface StartServerConfig {
+  app: Express
+}
+
+export const startServer = ({ app }: StartServerConfig): void => {
   const message = 'Running on'
   const fullMessage = `* ${message}: ${env.address} 🌐`
 

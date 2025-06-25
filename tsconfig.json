@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "module": "ESNext",
+    "noEmit": true,
     "baseUrl": ".",
     "paths": {
       "#root/*": ["./*"],
@@ -13,5 +17,5 @@
       "#utils/*": ["./src/utils/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "*.ts"]
 }

@@ -1,7 +1,33 @@
-import { author } from '#utils/author.js'
+import type { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
+import { author, Author } from '#root/src/utils/author.js'
 
-const errorHandler = (err, _req, res, _next) => {
-  const errorResponse = {
+interface CustomError extends Error {
+  status?: number
+  code?: string
+  context?: any
+  issues?: any[]
+}
+
+interface ErrorResponse {
+  success: boolean
+  status: number
+  error: {
+    code: string
+    message: string
+    name?: string
+    context?: any
+    stack?: string
+  }
+  author: Author
+}
+
+const errorHandler: ErrorRequestHandler = (
+  err: CustomError,
+  _req: Request,
+  res: Response,
+  _next: NextFunction
+): void => {
+  const errorResponse: ErrorResponse = {
     success: false,
     status: err.status || 500,
     error: {

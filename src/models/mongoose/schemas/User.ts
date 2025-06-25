@@ -1,7 +1,22 @@
 import { Schema, model } from 'mongoose'
-import { addMethods } from './utils/addStaticMethods.js'
+import { addMethods } from '../utils/addStaticMethods.js'
+import { IStaticsMethods } from '../../typeMethods.js'
 
-const userSchema = new Schema({
+export interface IUser extends Document {
+  _id: string
+  name: string
+  email: string
+  password: string
+  role: 'admin' | 'user'
+  whatsapp?: string
+  imageUrl?: string
+  isEmailVerified: boolean
+  isWhatsappVerified: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+const userSchema = new Schema<IUser>({
   name: {
     type: String,
     required: true,
@@ -52,6 +67,6 @@ userSchema.index({ name: 1 })
 userSchema.index({ role: 1 })
 
 // Agregar métodos estáticos
-addMethods(userSchema)
+addMethods<IUser>(userSchema)
 
-export default model('users', userSchema)
+export default model<IUser, IStaticsMethods<IUser>>('users', userSchema)

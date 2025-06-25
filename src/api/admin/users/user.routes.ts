@@ -1,8 +1,16 @@
 import { Router } from 'express'
 import UserController from './user.controller.js'
 import { validateCreateUser, validateUpdateUser } from './user.validation.js'
+import { IStaticsMethods } from '#models/typeMethods.js'
 
-export const createUserRouter = ({ models }) => {
+interface CreateUserRouterConfig<T> {
+  models: {
+    User: IStaticsMethods<T>
+    // Add other models here as needed
+  }
+}
+
+export const createUserRouter = <T>({ models }: CreateUserRouterConfig<T>): Router => {
   const router = Router()
 
   const userController = new UserController({ models })

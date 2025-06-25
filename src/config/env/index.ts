@@ -1,3 +1,5 @@
+import type { DatabaseType, EnvConfig, NodeEnvType } from "./types"
+
 const envs = process.env
 
 export const ENV_VARS = {
@@ -27,21 +29,22 @@ export const ENV_VARS = {
   // // Mailer
   // MAILER_EMAIL: 'MAILER_EMAIL',
   // MAILER_PASSWORD: 'MAILER_PASSWORD'
-}
+} as const
 
-export const env = {
+
+export const env: EnvConfig = {
   // Server
-  NODE_ENV: envs[ENV_VARS.NODE_ENV],
+  NODE_ENV: envs[ENV_VARS.NODE_ENV] as NodeEnvType,
   HOST: envs[ENV_VARS.HOST],
   PORT: envs[ENV_VARS.PORT],
   ALLOWED_PROD_ORIGINS: envs[ENV_VARS.ALLOWED_PROD_ORIGINS],
   ALLOWED_DEV_ORIGINS: envs[ENV_VARS.ALLOWED_DEV_ORIGINS],
-  get isProduction () { return this.NODE_ENV === 'production' },
-  get isDevelopment () { return this.NODE_ENV === 'development' },
-  get address () { return this.PORT ? `${this.HOST}:${this.PORT}` : this.HOST },
+  get isProduction() { return this.NODE_ENV === 'production' },
+  get isDevelopment() { return this.NODE_ENV === 'development' },
+  get address() { return this.PORT ? `${this.HOST}:${this.PORT}` : this.HOST || '' },
 
   // Database
-  DB_TYPE: envs[ENV_VARS.DB_TYPE],
+  DB_TYPE: envs[ENV_VARS.DB_TYPE] as DatabaseType,
   DB_URI: envs[ENV_VARS.DB_URI],
   DB_NAME: envs[ENV_VARS.DB_NAME],
   DB_USER: envs[ENV_VARS.DB_USER],
@@ -61,8 +64,8 @@ export const env = {
   // MAILER_PASSWORD: envs[ENV_VARS.MAILER_PASSWORD]
 }
 
-export const initEnv = () => {
-  const missingVars = Object.values(ENV_VARS).filter(varName => !envs[varName])
+export const initEnv = (): void => {
+  const missingVars = Object.values(ENV_VARS).filter((varName: string) => !envs[varName])
 
   if (missingVars.length > 0) {
     console.error('ERROR:')
