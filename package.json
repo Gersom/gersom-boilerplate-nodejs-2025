@@ -1,27 +1,48 @@
 {
-  "name": "gercash-backend",
+  "name": "ger-node-api",
   "version": "1.0.0",
-  "description": "GerCash Backend",
+  "description": "Ger Node API Boilerplate with Bun and TypeScript",
   "main": "server.js",
   "type": "module",
+  "author": "Gersom Alaja <gersomalaja@gmail.com>",
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/Gersom/ger-node-api#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gersom/ger-node-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Gersom/ger-node-api/issues"
+  },
+  "keywords": [
+    "node",
+    "api",
+    "bun",
+    "typescript",
+    "boilerplate",
+    "express"
+  ],
   "scripts": {
-    "start": "npm run start:node",
-    "dev": "npm run start:node",
-    "build": "npm run build:node",
-    "start:bun": "bun server.js",
-    "start:node": "node --env-file .env server.js",
-    "dev:bun": "bunx tsc --noEmit && bun run --watch server.js",
-    "dev:node": "node --trace-warnings --watch --env-file .env server.js",
-    "build:bun": "bunx tsc --noEmit && bun build server.js --outdir ./dist --minify --target node",
-    "build:node": "node --build server.js",
+    "start": "npm run start:bun",
+    "dev": "npm run dev:bun",
+    "build": "npm run build:bun",
+    "start:bun": "bun run dist/server.js",
+    "start:node": "node --env-file .env dist/server.js",
+    "dev:bun": "bunx tsc --noEmit && bun run --watch server.ts",
+    "dev:node": "tsx --env-file .env --watch server.ts",
+    "build:bun": "bunx tsc --noEmit && bun build server.ts --outdir ./dist --target node --format esm && bun run copy:storage-bun",
+    "build:bun-mini": "bunx tsc --noEmit && bun build server.ts --outdir ./dist --minify --target node --format esm && bun run copy:storage-bun",
+    "build:bun-tsc": "bunx tsc --outDir ./dist && bun run copy:storage-bun-cpx",
+    "build:tsc": "tsc --outDir ./dist && npm run copy:storage-cpx",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "jest"
+    "test": "jest",
+    "copy:storage-bun": "bunx cpx \"src/storage/**/*\" ./storage --verbose",
+    "copy:storage-bun-cpx": "bunx cpx \"src/storage/**/*\" dist/src/storage --verbose",
+    "copy:storage-cpx": "cpx \"src/storage/**/*\" dist/src/storage --verbose"
   },
-  "author": "",
-  "license": "MPL-2.0",
   "dependencies": {
-    "bcrypt": "5.1.1",
+    "bcryptjs": "3.0.2",
     "cors": "2.8.5",
     "express": "5.1.0",
     "mongoose": "8.15.0",
@@ -29,13 +50,16 @@
     "zod": "3.25.28"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
-    "@types/mongoose": "^5.11.97",
-    "@types/morgan": "^1.9.10",
-    "@types/node": "^24.0.4",
+    "@types/bcryptjs": "3.0.0",
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.3",
+    "@types/mongoose": "5.11.97",
+    "@types/morgan": "1.9.10",
+    "@types/node": "24.0.4",
+    "cpx": "^1.5.0",
     "standard": "17.1.2",
-    "typescript": "^5.8.3"
+    "tsx": "4.20.3",
+    "typescript": "5.8.3"
   },
   "eslintConfig": {
     "extends": "standard"

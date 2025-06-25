@@ -1,9 +1,9 @@
 import express, { Express, Request, Response, NextFunction } from 'express'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
-import { createApiRouter } from '#root/src/api'
-import errorHandler from '#root/src/middleware/errorHandler.js'
-import { NotFoundError } from '#root/src/utils/apiErrors.js'
+import { createApiRouter } from '#api/index.js'
+import errorHandler from '#middleware/errorHandler.js'
+import { NotFoundError } from '#utils/apiErrors.js'
 
 // Get __dirname equivalent in ESM
 const __filename = fileURLToPath(import.meta.url)

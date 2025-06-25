@@ -1,5 +1,5 @@
 import { connect } from 'mongoose'
-import { env } from '#root/src/config/env'
+import { env } from '#config/env/index.js'
 
 export const connectMongoDB = async (): Promise<void> => {
   try {
